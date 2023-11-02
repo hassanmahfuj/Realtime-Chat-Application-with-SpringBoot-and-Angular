@@ -1,0 +1,224 @@
+<div class="container-fluid bg-body-tertiary">
+  <!-- Row for dividing the content into two columns -->
+  <div class="row">
+    <!-- Left column for user information, user list, and conversations list -->
+    <div class="col-sm-6 col-md-5 col-lg-4 bg-body-secondary">
+      <div class="vh-100 d-flex flex-column">
+        <!-- User information and action buttons -->
+        <div class="row bg-dark-subtle py-2">
+          <div class="col-6">
+            <img
+              class="img-avatar"
+              src="https://bootdey.com/img/Content/avatar/avatar7.png"
+            />
+            <p>Signed in as<br />{{ currentUser.email }}</p>
+          </div>
+          <div class="col-6 d-flex justify-content-end align-items-center">
+            <!-- Toggle user list, and conversations list -->
+            <button
+              (click)="onShowHideUserConversation()"
+              class="btn btn-success"
+            >
+              <i *ngIf="!showUserState" class="bi bi-person-plus"></i>
+              <i *ngIf="showUserState" class="bi bi-send-plus"></i>
+            </button>
+            <!-- Logout button -->
+            <button (click)="onUserLogout()" class="btn btn-danger ms-2">
+              <i class="bi bi-box-arrow-left"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Users list section -->
+        <h4 *ngIf="showUserState" class="mt-2">Users</h4>
+        <div
+          *ngIf="showUserState"
+          class="scrollarea border-top border-secondary-subtle"
+        >
+          <!-- Display a list of users -->
+          <div
+            *ngFor="let u of users"
+            (click)="onUserSelected(u.userId, u.firstName + ' ' + u.lastName)"
+            class="list-group-item list-group-item-action py-3 lh-sm cursor-pointer"
+          >
+            <div
+              class="d-flex w-100 align-items-center justify-content-between"
+            >
+              <strong class="mb-1">{{ u.firstName + " " + u.lastName }}</strong>
+            </div>
+            <div class="col-10 mb-1 small">
+              {{ u.email }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Conversations list section -->
+        <h4 *ngIf="!showUserState" class="mt-2 word-break-all">
+          Conversations
+        </h4>
+        <div
+          *ngIf="!showUserState"
+          class="scrollarea border-top border-secondary-subtle"
+        >
+          <div
+            *ngFor="let c of userConversations; let i = index"
+            (click)="onConversationSelected(i)"
+            class="list-group-item list-group-item-action py-3 lh-sm cursor-pointer"
+          >
+            <div
+              class="d-flex w-100 align-items-center justify-content-between"
+            >
+              <strong class="mb-1">{{ c.otherUserName }}</strong>
+              <small class="text-body-secondary">{{
+                c.lastMessageTimestamp | date : "dd/MM/yyyy"
+              }}</small>
+            </div>
+            <div class="col-10 mb-1 small">
+              {{ c.lastMessage }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right column for displaying selected conversations -->
+    <div
+      class="col-sm-6 col-md-7 col-lg-8 bg-dark-subtle p-0 border-start border-secondary"
+    >
+      <!-- Message for when no conversation is selected -->
+      <div
+        *ngIf="selectedConversationId == -1"
+        class="d-flex justify-content-center align-items-center vh-100"
+      >
+        <div class="text-center">
+          <i class="bi bi-chat-dots fs-1"></i>
+          <h4>No conversation selected</h4>
+          <p>Click on a conversation or find<br />new user to start chat</p>
+        </div>
+      </div>
+
+      <!-- Conversation display -->
+      <div
+        *ngIf="selectedConversationId != -1"
+        class="vh-100 d-flex flex-column"
+      >
+        <div class="p-2 mt-1 d-flex justify-content-between">
+          <h4>{{ selectedConversationReceiverName }}</h4>
+          <div class="dropdown">
+            <button class="btn btn-secondary" data-bs-toggle="dropdown">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item cursor-pointer">Contact info</a></li>
+              <li>
+                <a (click)="onCloseChat()" class="dropdown-item cursor-pointer"
+                  >Close chat</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item cursor-pointer"
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteChatModal"
+                  >Delete chat</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Main conversation display area -->
+        <div class="main-flex-grow scrollarea bg-body-secondary p-2">
+          <div *ngFor="let m of selectedConversation" class="mt-2">
+            <div
+              class="text-white rounded-4 p-2 mw-75"
+              [ngClass]="
+                currentUser.userId == m.senderId
+                  ? 'float-end bg-primary bg-gradient'
+                  : 'float-start bg-secondary bg-gradient'
+              "
+            >
+              <div class="fs-6 word-break">{{ m.message }}</div>
+              <div class="text-white-50 fs-7 float-end">
+                {{ m.timestamp | date : "dd-MM-yy hh:mm a" }}
+              </div>
+            </div>
+            <div
+              *ngIf="currentUser.userId == m.senderId"
+              class="dropdown-center"
+            >
+              <i
+                class="bi bi-three-dots-vertical p-2 cursor-pointer float-end opacity-hover"
+                data-bs-toggle="dropdown"
+              ></i>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item cursor-pointer">Reply</a></li>
+                <li><a class="dropdown-item cursor-pointer">Forward</a></li>
+                <li>
+                  <a
+                    (click)="onDeleteMessage(m.messageId)"
+                    class="dropdown-item cursor-pointer"
+                    >Delete</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Message input form -->
+        <div>
+          <form (submit)="onSendMessage()">
+            <div class="d-flex px-4 py-2 bg-dark-subtle">
+              <input
+                class="form-control"
+                type="text"
+                name="message"
+                placeholder="Type a message"
+                [(ngModel)]="message"
+              />
+              <button type="submit" class="btn btn-primary ms-2">
+                <i class="bi bi-send"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Chat Modal -->
+<div class="modal fade" id="deleteChatModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Delete conversation
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Are you sure about to delete this conversation?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button
+          (click)="onDeleteConversation()"
+          type="button"
+          class="btn btn-danger"
+          data-bs-dismiss="modal"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,126 @@
+<div class="d-flex align-items-center py-4 bg-body-tertiary vh-100">
+  <main class="form-signin w-100 m-auto">
+
+    <!-- Login Form -->
+    <form *ngIf="isLogin" (ngSubmit)="onUserLogin()" novalidate #f1="ngForm">
+      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+      <div class="form-floating">
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="name@example.com"
+          [(ngModel)]="email"
+          required
+          #email1="ngModel"
+        />
+        <label for="email">Email address</label>
+      </div>
+      <ul
+        *ngIf="email1.dirty && email1.invalid"
+        class="text-danger list-unstyled m-0"
+      >
+        <li *ngIf="email1.errors?.['required']">Email is required</li>
+      </ul>
+      <span *ngIf="userNotFound" class="text-danger">User not found</span>
+      <button
+        class="btn btn-primary w-100 py-2 mt-3"
+        type="submit"
+        [disabled]="!f1.valid"
+      >
+        Sign in
+      </button>
+      <p class="mt-2 mb-3 text-body-secondary text-center">
+        Don't have an account?
+        <span
+          class="text-decoration-underline cursor-pointer text-primary"
+          (click)="toggleAuth()"
+          >Register</span
+        >
+      </p>
+    </form>
+
+    <!-- Registration Form -->
+    <form
+      *ngIf="!isLogin"
+      (ngSubmit)="onUserRegister()"
+      novalidate
+      #f2="ngForm"
+    >
+      <h1 class="h3 mb-3 fw-normal">Register an account</h1>
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="firstName"
+          name="firstName"
+          placeholder="First name"
+          [(ngModel)]="firstName"
+          required
+          #firstName1="ngModel"
+        />
+        <label for="firstName">First name</label>
+      </div>
+      <ul
+        *ngIf="firstName1.dirty && firstName1.invalid"
+        class="text-danger list-unstyled m-0"
+      >
+        <li *ngIf="firstName1.errors?.['required']">First name is required</li>
+      </ul>
+      <div class="form-floating mt-1">
+        <input
+          type="text"
+          class="form-control"
+          id="lastName"
+          name="lastName"
+          placeholder="Last name"
+          [(ngModel)]="lastName"
+          required
+          #lastName1="ngModel"
+        />
+        <label for="lastName">Last name</label>
+      </div>
+      <ul
+        *ngIf="lastName1.dirty && lastName1.invalid"
+        class="text-danger list-unstyled m-0"
+      >
+        <li *ngIf="lastName1.errors?.['required']">Last name is required</li>
+      </ul>
+      <div class="form-floating mt-1">
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="name@example.com"
+          [(ngModel)]="email"
+          required
+          #email2="ngModel"
+        />
+        <label for="email">Email address</label>
+      </div>
+      <ul
+        *ngIf="email2.dirty && email2.invalid"
+        class="text-danger list-unstyled m-0"
+      >
+        <li *ngIf="email2.errors?.['required']">Email is required</li>
+      </ul>
+      <button
+        class="btn btn-primary w-100 py-2 mt-3"
+        type="submit"
+        [disabled]="!f2.valid"
+      >
+        Register
+      </button>
+      <p class="mt-2 mb-3 text-body-secondary text-center">
+        Already registered?
+        <span
+          class="text-decoration-underline cursor-pointer text-primary"
+          (click)="toggleAuth()"
+          >Signin</span
+        >
+      </p>
+    </form>
+  </main>
+</div>
