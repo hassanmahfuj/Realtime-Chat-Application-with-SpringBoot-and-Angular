@@ -4,6 +4,10 @@ This is a real-time chat application with a client in the browser developed usin
 
 ![ChatScreen](https://github.com/hassanmahfuj/Realtime-Chat-Application-with-SpringBoot-and-Angular/blob/main/Screenshot-Frontend.png)
 
+![ChatScreen](https://github.com/hassanmahfuj/Realtime-Chat-Application-with-SpringBoot-and-Angular/blob/main/Screenshot-LoginRegister.png)
+
+![ChatScreen](https://github.com/hassanmahfuj/Realtime-Chat-Application-with-SpringBoot-and-Angular/blob/main/Screenshot-DeleteFunction.png)
+
 ## Features
 
 - User Registration:

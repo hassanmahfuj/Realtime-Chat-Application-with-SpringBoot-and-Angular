@@ -22,7 +22,7 @@
 }
 
 .opacity-hover {
-  opacity: 0;
+  opacity: 1;
 }
 
 .opacity-hover:hover {
