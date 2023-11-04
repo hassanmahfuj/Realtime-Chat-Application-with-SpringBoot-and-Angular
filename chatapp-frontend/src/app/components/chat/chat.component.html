@@ -1,80 +1,55 @@
-<div class="container-fluid bg-body-tertiary">
+<div class="container-fluid">
   <!-- Row for dividing the content into two columns -->
   <div class="row">
     <!-- Left column for user information, user list, and conversations list -->
-    <div class="col-sm-6 col-md-5 col-lg-4 bg-body-secondary">
+    <div class="col-sm-5 col-md-4 col-lg-3">
       <div class="vh-100 d-flex flex-column">
-        <!-- User information and action buttons -->
-        <div class="row bg-dark-subtle py-2">
-          <div class="col-6">
-            <img
-              class="img-avatar"
-              src="https://bootdey.com/img/Content/avatar/avatar7.png"
-            />
-            <p>Signed in as<br />{{ currentUser.email }}</p>
-          </div>
-          <div class="col-6 d-flex justify-content-end align-items-center">
+        <div class="py-2">
+          <h4>Hello, Hassan Mahfuj</h4>
+          <div class="d-flex">
             <!-- Toggle user list, and conversations list -->
             <button
               (click)="onShowHideUserConversation()"
-              class="btn btn-success"
+              class="btn btn-sm btn-success"
             >
-              <i *ngIf="!showUserState" class="bi bi-person-plus"></i>
-              <i *ngIf="showUserState" class="bi bi-send-plus"></i>
+              <span *ngIf="!showUserState">Show Available Users</span>
+              <span *ngIf="showUserState">Show Conversations</span>
             </button>
-            <!-- Logout button -->
-            <button (click)="onUserLogout()" class="btn btn-danger ms-2">
-              <i class="bi bi-box-arrow-left"></i>
+            <button (click)="onUserLogout()" class="btn btn-sm btn-danger ms-2">
+              Logout
             </button>
           </div>
         </div>
 
         <!-- Users list section -->
-        <h4 *ngIf="showUserState" class="mt-2">Users</h4>
-        <div
-          *ngIf="showUserState"
-          class="scrollarea border-top border-secondary-subtle"
-        >
+        <h5 *ngIf="showUserState" class="mt-2 m-0">Available Users</h5>
+        <div *ngIf="showUserState" class="scrollarea">
           <!-- Display a list of users -->
           <div
             *ngFor="let u of users"
             (click)="onUserSelected(u.userId, u.firstName + ' ' + u.lastName)"
-            class="list-group-item list-group-item-action py-3 lh-sm cursor-pointer"
+            class="p-2 mt-2 cursor-pointer bg-secondary-subtle rounded"
           >
-            <div
-              class="d-flex w-100 align-items-center justify-content-between"
-            >
-              <strong class="mb-1">{{ u.firstName + " " + u.lastName }}</strong>
-            </div>
-            <div class="col-10 mb-1 small">
-              {{ u.email }}
-            </div>
+            <h5>{{ u.firstName + " " + u.lastName }}</h5>
           </div>
         </div>
 
         <!-- Conversations list section -->
-        <h4 *ngIf="!showUserState" class="mt-2 word-break-all">
+        <h5 *ngIf="!showUserState" class="mt-2 word-break-all m-0">
           Conversations
-        </h4>
-        <div
-          *ngIf="!showUserState"
-          class="scrollarea border-top border-secondary-subtle"
-        >
+        </h5>
+        <div *ngIf="!showUserState" class="scrollarea">
           <div
             *ngFor="let c of userConversations; let i = index"
             (click)="onConversationSelected(i)"
-            class="list-group-item list-group-item-action py-3 lh-sm cursor-pointer"
+            class="p-2 mt-2 d-flex align-items-center cursor-pointer rounded bg-secondary-subtle"
           >
-            <div
-              class="d-flex w-100 align-items-center justify-content-between"
-            >
-              <strong class="mb-1">{{ c.otherUserName }}</strong>
-              <small class="text-body-secondary">{{
-                c.lastMessageTimestamp | date : "dd/MM/yyyy"
-              }}</small>
+            <div>
+              <span class="circular-letter me-2">P</span>
             </div>
-            <div class="col-10 mb-1 small">
-              {{ c.lastMessage }}
+            <div class="w-100">
+              <h6 class="m-0">{{ c.otherUserName }}</h6>
+              <small class="m-0">{{ c.lastMessage }}</small>
             </div>
           </div>
         </div>
@@ -83,7 +58,7 @@
 
     <!-- Right column for displaying selected conversations -->
     <div
-      class="col-sm-6 col-md-7 col-lg-8 bg-dark-subtle p-0 border-start border-secondary"
+      class="col-sm-7 col-md-8 col-lg-9 bg-body-tertiary p-0 border-start border-secondary-subtle"
     >
       <!-- Message for when no conversation is selected -->
       <div
@@ -102,66 +77,54 @@
         *ngIf="selectedConversationId != -1"
         class="vh-100 d-flex flex-column"
       >
-        <div class="p-2 mt-1 d-flex justify-content-between">
+        <div class="p-2 mt-1 d-flex justify-content-between bg-body-secondary">
           <h4>{{ selectedConversationReceiverName }}</h4>
           <div class="dropdown">
-            <button class="btn btn-secondary" data-bs-toggle="dropdown">
-              <i class="bi bi-three-dots-vertical"></i>
+            <button
+              class="btn btn-light"
+              data-bs-toggle="modal"
+              data-bs-target="#deleteChatModal"
+            >
+              <i class="bi bi-trash-fill text-danger"></i> Delete Chat
             </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item cursor-pointer">Contact info</a></li>
-              <li>
-                <a (click)="onCloseChat()" class="dropdown-item cursor-pointer"
-                  >Close chat</a
-                >
-              </li>
-              <li>
-                <a
-                  class="dropdown-item cursor-pointer"
-                  data-bs-toggle="modal"
-                  data-bs-target="#deleteChatModal"
-                  >Delete chat</a
-                >
-              </li>
-            </ul>
           </div>
         </div>
 
         <!-- Main conversation display area -->
-        <div class="main-flex-grow scrollarea bg-body-secondary p-2">
+        <div class="main-flex-grow scrollarea p-2">
           <div *ngFor="let m of selectedConversation" class="mt-2">
             <div
-              class="text-white rounded-4 p-2 mw-75"
+              class="text-white rounded py-1 px-2 mw-75"
               [ngClass]="
                 currentUser.userId == m.senderId
-                  ? 'float-end bg-primary bg-gradient'
-                  : 'float-start bg-secondary bg-gradient'
+                  ? 'float-end bg-primary-1 text-white'
+                  : 'float-start bg-secondary-subtle text-dark'
               "
             >
-              <div class="fs-6 word-break">{{ m.message }}</div>
-              <div class="text-white-50 fs-7 float-end">
-                {{ m.timestamp | date : "dd-MM-yy hh:mm a" }}
+              <div
+                class="fs-6 word-break"
+                [ngClass]="
+                  currentUser.userId == m.senderId ? 'text-white' : 'text-dark'
+                "
+              >
+                {{ m.message }}
+              </div>
+              <div
+                class="fs-7"
+                [ngClass]="
+                  currentUser.userId == m.senderId
+                    ? 'float-end text-white-50'
+                    : 'float-start text-black-50'
+                "
+              >
+                {{ m.timestamp | betterDate }}
               </div>
             </div>
-            <div
-              *ngIf="currentUser.userId == m.senderId"
-              class="dropdown-center"
-            >
+            <div *ngIf="currentUser.userId == m.senderId">
               <i
-                class="bi bi-three-dots-vertical p-2 cursor-pointer float-end opacity-hover"
-                data-bs-toggle="dropdown"
+                (click)="onDeleteMessage(m.messageId)"
+                class="bi bi-trash text-danger p-2 cursor-pointer float-end opacity-hover"
               ></i>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item cursor-pointer">Reply</a></li>
-                <li><a class="dropdown-item cursor-pointer">Forward</a></li>
-                <li>
-                  <a
-                    (click)="onDeleteMessage(m.messageId)"
-                    class="dropdown-item cursor-pointer"
-                    >Delete</a
-                  >
-                </li>
-              </ul>
             </div>
           </div>
         </div>
@@ -169,7 +132,7 @@
         <!-- Message input form -->
         <div>
           <form (submit)="onSendMessage()">
-            <div class="d-flex px-4 py-2 bg-dark-subtle">
+            <div class="d-flex px-4 py-2 bg-body-secondary">
               <input
                 class="form-control"
                 type="text"
@@ -177,8 +140,8 @@
                 placeholder="Type a message"
                 [(ngModel)]="message"
               />
-              <button type="submit" class="btn btn-primary ms-2">
-                <i class="bi bi-send"></i>
+              <button type="submit" class="btn bg-primary-1 ms-2">
+                <i class="bi bi-send text-white"></i>
               </button>
             </div>
           </form>

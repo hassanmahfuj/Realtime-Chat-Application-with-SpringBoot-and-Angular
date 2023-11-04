@@ -1,4 +1,12 @@
 .form-signin {
-  max-width: 330px;
+  max-width: 700px;
   padding: 1rem;
+}
+
+.img-cover {
+  width: 100%;
+}
+
+.bg-login {
+  background-color: rgba(235, 235, 235, 0.8);
 }

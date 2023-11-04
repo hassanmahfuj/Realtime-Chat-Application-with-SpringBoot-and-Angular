@@ -8,9 +8,10 @@ import { StompService } from './services/stomp.service';
 import { ChatComponent } from './components/chat/chat.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { FormsModule } from '@angular/forms';
+import { BetterDatePipe } from './better-date.pipe';
 
 @NgModule({
-  declarations: [AppComponent, NotFoundComponent, ChatComponent, AuthComponent],
+  declarations: [AppComponent, NotFoundComponent, ChatComponent, AuthComponent, BetterDatePipe],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [StompService],
   bootstrap: [AppComponent],

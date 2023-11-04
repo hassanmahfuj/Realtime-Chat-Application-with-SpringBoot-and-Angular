@@ -2,11 +2,13 @@
 
 This is a real-time chat application with a client in the browser developed using Angular for the frontend and Spring Boot for the backend. The backend uses WebSocket (via Spring's WebSocket support) for real-time communication between users. It also integrates with MySQL to store user data and chat history. Users can register with their email, first name, and last name, and then initiate chats with other registered users. The application also supports viewing and deleting old chats and allows users to sign out.
 
-![ChatScreen](https://github.com/hassanmahfuj/Realtime-Chat-Application-with-SpringBoot-and-Angular/blob/main/Screenshot-Frontend.png)
+![RegisterPage](https://github.com/hassanmahfuj/Realtime-Chat-Application-with-SpringBoot-and-Angular/blob/main/RegisterPage.jpg)
 
-![ChatScreen](https://github.com/hassanmahfuj/Realtime-Chat-Application-with-SpringBoot-and-Angular/blob/main/Screenshot-LoginRegister.png)
+![LoginPage](https://github.com/hassanmahfuj/Realtime-Chat-Application-with-SpringBoot-and-Angular/blob/main/LoginPage.jpg)
 
-![ChatScreen](https://github.com/hassanmahfuj/Realtime-Chat-Application-with-SpringBoot-and-Angular/blob/main/Screenshot-DeleteFunction.png)
+![ChatPage](https://github.com/hassanmahfuj/Realtime-Chat-Application-with-SpringBoot-and-Angular/blob/main/ChatPage.jpg)
+
+![DeleteModal](https://github.com/hassanmahfuj/Realtime-Chat-Application-with-SpringBoot-and-Angular/blob/main/DeleteModal.jpg)
 
 ## Features
 
