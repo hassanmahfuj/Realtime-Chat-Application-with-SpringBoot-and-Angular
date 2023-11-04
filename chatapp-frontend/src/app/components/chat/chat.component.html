@@ -2,7 +2,14 @@
   <!-- Row for dividing the content into two columns -->
   <div class="row">
     <!-- Left column for user information, user list, and conversations list -->
-    <div class="col-sm-5 col-md-4 col-lg-3">
+    <div
+      [ngClass]="
+        selectedConversationId == -1
+          ? 'd-block d-sm-block'
+          : 'd-none d-sm-block'
+      "
+      class="col-sm-5 col-md-4 col-lg-3"
+    >
       <div class="vh-100 d-flex flex-column">
         <div class="py-2">
           <h4>Hello, Hassan Mahfuj</h4>
@@ -45,7 +52,9 @@
             class="p-2 mt-2 d-flex align-items-center cursor-pointer rounded bg-secondary-subtle"
           >
             <div>
-              <span class="circular-letter me-2">P</span>
+              <span class="circular-letter me-2">{{
+                c.otherUserName.charAt(0)
+              }}</span>
             </div>
             <div class="w-100">
               <h6 class="m-0">{{ c.otherUserName }}</h6>
@@ -58,6 +67,11 @@
 
     <!-- Right column for displaying selected conversations -->
     <div
+      [ngClass]="
+        selectedConversationId == -1
+          ? 'd-none d-sm-block'
+          : 'd-block d-sm-block'
+      "
       class="col-sm-7 col-md-8 col-lg-9 bg-body-tertiary p-0 border-start border-secondary-subtle"
     >
       <!-- Message for when no conversation is selected -->
@@ -77,17 +91,20 @@
         *ngIf="selectedConversationId != -1"
         class="vh-100 d-flex flex-column"
       >
-        <div class="p-2 mt-1 d-flex justify-content-between bg-body-secondary">
-          <h4>{{ selectedConversationReceiverName }}</h4>
-          <div class="dropdown">
-            <button
-              class="btn btn-light"
-              data-bs-toggle="modal"
-              data-bs-target="#deleteChatModal"
-            >
-              <i class="bi bi-trash-fill text-danger"></i> Delete Chat
+        <div class="p-2 d-flex justify-content-between bg-body-secondary">
+          <div class="d-flex align-items-center justify-content-center">
+            <button (click)="onCloseChat()" class="btn py-0 me-1 d-sm-none">
+              <i class="bi bi-list fs-4"></i>
             </button>
+            <h4 class="m-0">{{ selectedConversationReceiverName }}</h4>
           </div>
+          <button
+            class="btn btn-light"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteChatModal"
+          >
+            <i class="bi bi-trash-fill text-danger"></i> Delete Chat
+          </button>
         </div>
 
         <!-- Main conversation display area -->
