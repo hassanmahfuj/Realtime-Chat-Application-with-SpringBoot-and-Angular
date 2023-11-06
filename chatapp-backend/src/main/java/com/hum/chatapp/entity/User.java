@@ -9,7 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(
+        name = "user",
+        uniqueConstraints = @UniqueConstraint(
+                name = "constraint_unique_email",
+                columnNames = "email"
+        )
+)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +28,6 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 }

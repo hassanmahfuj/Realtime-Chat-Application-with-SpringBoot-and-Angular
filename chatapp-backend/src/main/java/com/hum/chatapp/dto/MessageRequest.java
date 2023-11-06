@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -14,5 +14,5 @@ public class MessageRequest {
     Integer senderId;
     Integer receiverId;
     String message;
-    Date timestamp;
+    LocalDateTime timestamp;
 }

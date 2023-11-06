@@ -13,24 +13,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     /**
-     * Handle exceptions of type UserNotFoundException.
-     *
-     * @param e The UserNotFoundException to handle.
-     * @return A ResponseEntity with an ApiResponse representing a user not found error.
-     */
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ApiResponse> handleUserNotFoundException(UserNotFoundException e) {
-        return new ResponseEntity<>(
-                ApiResponse.builder()
-                        .statusCode(400)
-                        .status("Failed")
-                        .reason("User not found")
-                        .build(),
-                HttpStatus.OK
-        );
-    }
-
-    /**
      * Handle exceptions of type InternalServerErrorException.
      *
      * @param e The InternalServerErrorException to handle.
@@ -42,7 +24,7 @@ public class GlobalExceptionHandler {
                 ApiResponse.builder()
                         .statusCode(500)
                         .status("Failed")
-                        .reason(e.getMessage())
+                        .reason("I - " + e.getMessage())
                         .build(),
                 HttpStatus.INTERNAL_SERVER_ERROR
         );

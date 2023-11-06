@@ -32,10 +32,8 @@ public interface MessageSocketService {
      * Delete a conversation by its unique conversation ID using a web socket.
      *
      * @param conversationId The ID of the conversation to be deleted.
-     * @param user1          The ID of a user to notify deleted message.
-     * @param user2          The ID of a user to notify deleted message.
      */
-    void deleteConversationByConversationId(int conversationId, int user1, int user2);
+    void deleteConversationByConversationId(int conversationId);
 
     /**
      * Delete a message by its unique message ID within a conversation using a web socket.

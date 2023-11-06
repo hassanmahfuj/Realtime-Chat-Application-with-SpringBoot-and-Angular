@@ -63,7 +63,9 @@ public class MessageSocketController {
         int conversationId = (int) payload.get("conversationId");
         int user1 = (int) payload.get("user1Id");
         int user2 = (int) payload.get("user2Id");
-        socketService.deleteConversationByConversationId(conversationId, user1, user2);
+        socketService.deleteConversationByConversationId(conversationId);
+        socketService.sendUserConversationByUserId(user1);
+        socketService.sendUserConversationByUserId(user2);
     }
 
     /**

@@ -1,9 +1,15 @@
 package com.hum.chatapp.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "message")
 public class Message {
@@ -12,7 +18,7 @@ public class Message {
     @Column(name = "message_id")
     private int messageId;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "conversation_id")
     private Conversation conversation;
 
